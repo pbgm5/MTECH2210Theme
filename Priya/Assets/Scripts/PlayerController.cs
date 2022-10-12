@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public GameManager gm;
     public float speed = 5;
+    public AudioClip coinClip;
+    public AudioClip hazardClip;
     void Start()
     {
         
@@ -24,15 +26,22 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Coin")
         {
             gm.IncrementScore(1);
+            gm.PlaySound(coinClip);
             Destroy(collision.gameObject);
         }
 
         if (collision.gameObject.tag == "Hazard")
         {
+            gm.PlaySound(hazardClip);
             Destroy(gameObject);
+            Destroy(collision.transform);
+            Debug.Log("Triggered");
         }
-        Destroy(collision.transform);
-        Debug.Log("Triggered");
 
+        if (collision.gameObject.tag == "Themebox")
+        {
+            Destroy(collision.gameObject);
+            Debug.Log("Theme Change");
+        }
     }
 }
